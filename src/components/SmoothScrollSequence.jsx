@@ -348,22 +348,22 @@ export default function SmoothScrollSequence() {
     window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
   };
 
-  // Pure floating text positioning (NO CARD BACKGROUND BOX)
+  // Pure floating text positioning (NO CARD BACKGROUND BOX) - 100% Mobile Responsive
   const getOpenSpaceClasses = (pos) => {
     switch (pos) {
       case 'right':
-        return 'right-6 sm:right-14 lg:right-24 top-28 sm:top-36 text-right';
+        return 'left-4 right-4 sm:left-auto sm:right-14 lg:right-24 top-24 sm:top-36 text-left sm:text-right';
       case 'left-top':
-        return 'left-6 sm:left-14 lg:left-24 top-20 sm:top-24 text-left';
+        return 'left-4 right-4 sm:right-auto sm:left-14 lg:left-24 top-20 sm:top-24 text-left';
       case 'left-bottom':
-        return 'left-6 sm:left-14 lg:left-24 bottom-24 sm:bottom-28 text-left';
+        return 'left-4 right-4 sm:right-auto sm:left-14 lg:left-24 bottom-20 sm:bottom-28 text-left';
       case 'right-bottom':
-        return 'right-6 sm:right-14 lg:right-24 bottom-24 sm:bottom-28 text-right';
+        return 'left-4 right-4 sm:left-auto sm:right-14 lg:right-24 bottom-20 sm:bottom-28 text-left sm:text-right';
       case 'center-top':
-        return 'left-1/2 -translate-x-1/2 top-28 sm:top-36 text-center';
+        return 'left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 top-24 sm:top-36 text-center';
       case 'left':
       default:
-        return 'left-6 sm:left-14 lg:left-24 top-28 sm:top-36 text-left';
+        return 'left-4 right-4 sm:right-auto sm:left-14 lg:left-24 top-24 sm:top-36 text-left';
     }
   };
 
@@ -459,7 +459,7 @@ export default function SmoothScrollSequence() {
             </div>
 
             {/* Luxury Editorial Display Title */}
-            <h2 className="text-3xl sm:text-4xl lg:text-6xl font-normal text-white leading-[1.05] font-['Playfair_Display'] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl lg:text-6xl font-normal text-white leading-[1.08] font-['Playfair_Display'] tracking-tight">
               <span>{activeStage.titleLine1} </span>
               <span className="italic font-normal text-[#ccff00] font-['Playfair_Display']">
                 {activeStage.titleLine2}

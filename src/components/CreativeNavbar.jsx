@@ -43,7 +43,7 @@ export default function CreativeNavbar({ onCartClick, cartCount = 0 }) {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-6 sm:px-12 pt-5 pb-8 bg-gradient-to-b from-black/90 via-black/60 to-transparent flex items-center justify-between font-['Outfit'] pointer-events-auto transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-12 pt-4 pb-6 sm:pt-5 sm:pb-8 bg-gradient-to-b from-black/95 via-black/70 to-transparent flex items-center justify-between font-['Outfit'] pointer-events-auto transition-all duration-300">
       {/* Brand Logo */}
       <a
         href="#home"
