@@ -45,12 +45,19 @@ const Footer = () => {
           >
             Products
           </button>
-          
+
           <button
-            onClick={() => handleNav('products')}
+            onClick={() => handleNav('transformations')}
             className="hover:text-[#ccff00] transition-colors cursor-pointer"
           >
-            Deals
+            Transformations
+          </button>
+
+          <button
+            onClick={() => handleNav('policy')}
+            className="hover:text-[#ccff00] transition-colors cursor-pointer"
+          >
+            Policies
           </button>
 
           <span className="text-neutral-700">•</span>

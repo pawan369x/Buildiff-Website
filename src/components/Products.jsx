@@ -26,8 +26,8 @@ import {
 import { PRODUCTS, CATEGORIES } from '../data/products';
 import { useCart } from '../context/CartContext';
 
-// --- MINIMALIST LUXURY PRODUCT CARD COMPONENT (MATCHING USER SCREENSHOT) ---
-const PremiumProductCard = ({
+// --- SQUARE MINIMALIST PRODUCT CARD COMPONENT (MATCHING USER REQUEST) ---
+const SquareProductCard = ({
   product,
   sel,
   onSizeChange,
@@ -42,145 +42,122 @@ const PremiumProductCard = ({
   const currentOrigPrice = sel.size ? sel.size.originalPrice : product.originalPrice;
 
   return (
-    <div className="group relative rounded-2xl bg-[#121214] border border-neutral-800/80 hover:border-neutral-600 p-3.5 flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl">
-      {/* Top Image Box with High-Contrast Background & Floating Badges */}
-      <div className="relative w-full h-64 sm:h-72 rounded-xl bg-neutral-900/90 border border-neutral-800/60 overflow-hidden flex items-center justify-center p-3 group">
+    <div className="group flex flex-col gap-3">
+      {/* 400x400 Square Image Container */}
+      <div className="relative aspect-square w-full overflow-hidden bg-neutral-900/90 rounded-2xl border border-neutral-800/80 group-hover:border-neutral-700 transition-all duration-300">
         
-        {/* Top Badges (Matching Screenshot: Top-Left REDUCED PRICE / NEW, Top-Right DISCOUNT %) */}
-        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between z-20 pointer-events-none">
-          <div className="flex flex-col gap-1 items-start">
-            <span className="text-[9px] font-black tracking-wider uppercase text-neutral-300 bg-black/80 px-2 py-0.5 rounded backdrop-blur-md">
-              REDUCED PRICE
-            </span>
-            <span className="text-[9px] font-extrabold uppercase tracking-widest text-[#ccff00]">
-              {product.categoryLabel}
-            </span>
-          </div>
-
-          <span className="px-2.5 py-1 rounded-md bg-[#00e676] text-black font-black text-[11px] tracking-wider uppercase shadow-md">
-            -{product.discount}
+        {/* Top Floating Badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
+          <span className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-neutral-300 font-bold text-[10px] uppercase tracking-wider border border-white/10">
+            {product.categoryLabel || product.category}
           </span>
+          {product.discount && (
+            <span className="px-2.5 py-1 rounded-full bg-[#ccff00] text-black font-black text-[10px] uppercase tracking-wider shadow-sm">
+              {product.discount}
+            </span>
+          )}
         </div>
 
-        {/* Wishlist Heart Button */}
-        <button
-          onClick={() => onToggleWishlist(product)}
-          className={`absolute bottom-2.5 right-2.5 z-20 p-2.5 rounded-full backdrop-blur-md border transition-all duration-200 cursor-pointer active:scale-90 ${
-            isWishlisted
-              ? 'bg-rose-500 text-white border-rose-400 shadow-md'
-              : 'bg-black/60 text-neutral-400 border-neutral-700/60 hover:text-white hover:bg-neutral-800'
-          }`}
-          title={isWishlisted ? 'Remove Wishlist' : 'Add Wishlist'}
-        >
-          <Heart size={14} fill={isWishlisted ? 'white' : 'none'} />
-        </button>
-
-        {/* Main Product Image */}
+        {/* Product Image */}
         <img
           src={product.image}
           alt={product.name}
           loading="lazy"
-          className="w-full h-full object-contain p-2 group-hover:scale-106 transition-transform duration-500 ease-out"
+          className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
         />
+        
+        {/* Hover Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-        {/* Floating Quick Action Bar on Hover (Matching Screenshot Bar) */}
-        <div className="absolute bottom-2.5 left-2.5 right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+        {/* Hover Actions - Slide up smoothly */}
+        <div className="absolute bottom-4 inset-x-0 flex justify-center items-center gap-2 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out z-10">
+          <button
+            onClick={() => onToggleWishlist(product)}
+            className={`h-10 w-10 rounded-full flex items-center justify-center shadow-lg transition-colors duration-200 cursor-pointer ${
+              isWishlisted
+                ? 'bg-rose-500 text-white shadow-rose-500/30'
+                : 'bg-white text-gray-900 hover:bg-[#ccff00] hover:text-black'
+            }`}
+            title={isWishlisted ? "Remove Wishlist" : "Add Wishlist"}
+          >
+            <Heart size={18} strokeWidth={1.8} fill={isWishlisted ? "white" : "none"} />
+          </button>
+
+          <button
+            onClick={() => onAddToCart(product)}
+            className={`h-10 px-5 rounded-full flex items-center justify-center gap-2 shadow-lg font-black text-xs uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
+              isAdded
+                ? 'bg-emerald-500 text-white'
+                : 'bg-[#ccff00] text-black hover:bg-white shadow-[0_0_15px_rgba(204,255,0,0.3)]'
+            }`}
+          >
+            {isAdded ? (
+              <>
+                <Check size={16} strokeWidth={2.5} />
+                <span>Added</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag size={16} strokeWidth={1.8} />
+                <span>Add</span>
+              </>
+            )}
+          </button>
+
           <button
             onClick={() => onQuickView(product)}
-            className="w-full py-2 px-3 rounded-lg bg-white hover:bg-[#ccff00] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-xl transition-all cursor-pointer"
+            className="bg-white text-gray-900 h-10 w-10 rounded-full flex items-center justify-center shadow-lg hover:bg-[#ccff00] hover:text-black transition-colors duration-200 cursor-pointer"
+            title="Quick View Specs"
           >
-            <Eye size={14} />
-            <span>Quick View Specs</span>
+            <Eye size={18} strokeWidth={1.8} />
           </button>
         </div>
       </div>
 
-      {/* Card Details & Info */}
-      <div className="pt-3.5 flex-1 flex flex-col justify-between">
-        <div>
-          {/* Title */}
-          <h3
-            onClick={() => onQuickView(product)}
-            className="text-sm sm:text-base font-bold text-white hover:text-[#ccff00] transition-colors line-clamp-2 leading-snug cursor-pointer mb-2"
-          >
-            {product.name}
-          </h3>
+      {/* Neat & Clean Text Area Below Image */}
+      <div className="flex flex-col items-center text-center px-2">
+        <span className="text-[11px] font-semibold tracking-widest text-neutral-400 uppercase mb-1">
+          {product.categoryLabel || product.category}
+        </span>
+        
+        <h3
+          onClick={() => onQuickView(product)}
+          className="text-sm font-bold text-white group-hover:text-[#ccff00] transition-colors truncate w-full cursor-pointer mb-1"
+        >
+          {product.name}
+        </h3>
 
-          {/* Rating */}
-          <div className="flex items-center gap-1.5 mb-2.5 text-xs text-neutral-400">
-            <div className="flex items-center text-amber-400">
-              <Star size={12} className="fill-amber-400 text-amber-400" />
-            </div>
-            <span className="font-bold text-white text-[11px]">{product.rating}</span>
-            <span className="text-neutral-500 text-[10px]">({product.reviews})</span>
+        {/* Size Selection Pills */}
+        {product.sizes && product.sizes.length > 0 && (
+          <div className="flex flex-wrap items-center justify-center gap-1.5 my-1.5">
+            {product.sizes.map((sz, idx) => {
+              const isSelected = sel.size?.label === sz.label;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => onSizeChange(product.id, sz)}
+                  className={`px-2 py-0.5 rounded text-[10px] font-black transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#ccff00] text-black shadow-sm'
+                      : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
+                  }`}
+                >
+                  {sz.label}
+                </button>
+              );
+            })}
           </div>
+        )}
 
-          {/* Size Selectors (Minimalist Pills) */}
-          {product.sizes && product.sizes.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
-              {product.sizes.map((sz, idx) => {
-                const isSelected = sel.size?.label === sz.label;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => onSizeChange(product.id, sz)}
-                    className={`px-2 py-0.5 rounded text-[10px] font-black transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-[#ccff00] text-black shadow-sm'
-                        : 'bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800'
-                    }`}
-                  >
-                    {sz.label}
-                  </button>
-                );
-              })}
-            </div>
+        <div className="flex items-center gap-2 mt-0.5">
+          <p className="text-base font-black text-[#ccff00]">
+            ₹{currentPrice.toLocaleString('en-IN')}
+          </p>
+          {currentOrigPrice && (
+            <p className="text-xs text-neutral-500 line-through font-medium">
+              ₹{currentOrigPrice.toLocaleString('en-IN')}
+            </p>
           )}
-        </div>
-
-        {/* Price & Action Buttons */}
-        <div className="pt-2.5 border-t border-neutral-800/80">
-          <div className="flex items-baseline gap-2 mb-3">
-            {currentOrigPrice && (
-              <span className="text-xs text-neutral-500 line-through">
-                ₹{currentOrigPrice.toLocaleString('en-IN')}
-              </span>
-            )}
-            <span className="text-xl font-black text-[#ccff00] tracking-tight">
-              ₹{currentPrice.toLocaleString('en-IN')}
-            </span>
-          </div>
-
-          {/* Action Button Grid */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => onAddToCart(product)}
-              className={`py-2.5 px-2.5 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                isAdded
-                  ? 'bg-emerald-500 text-white shadow-md'
-                  : 'bg-[#ccff00] hover:bg-[#b8e600] text-black shadow-[0_0_15px_rgba(204,255,0,0.3)]'
-              }`}
-            >
-              {isAdded ? (
-                <>
-                  <Check size={14} className="stroke-[3]" />
-                  <span>Added</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingBag size={14} />
-                  <span>Add To Cart</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={() => onBuyNow(product)}
-              className="py-2.5 px-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white hover:text-[#ccff00] font-bold text-xs uppercase tracking-wider border border-neutral-800 hover:border-neutral-600 transition-all cursor-pointer"
-            >
-              Buy Now
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -553,13 +530,13 @@ const Products = () => {
 
             </div>
 
-            {/* 3-Column Minimalist Product Grid */}
+            {/* Square Minimalist Product Grid (Matching User Request) */}
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-6 gap-y-10">
                 {filteredProducts.map(product => {
                   const sel = getProductSelection(product);
                   return (
-                    <PremiumProductCard
+                    <SquareProductCard
                       key={product.id}
                       product={product}
                       sel={sel}

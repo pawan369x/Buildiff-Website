@@ -6,7 +6,8 @@ import { useCart } from '../context/CartContext';
 const navItems = [
   { id: 'home', label: 'Home', href: '#home' },
   { id: 'products', label: 'Products', href: '#products' },
-  { id: 'deals', label: 'Deals', href: '#products', badge: '20% OFF' }
+  { id: 'transformations', label: 'Transformations', href: '#transformations', badge: '100+ REAL' },
+  { id: 'policy', label: 'Policies', href: '#policy', badge: 'VERIFIED' }
 ];
 
 export default function CreativeNavbar({ onCartClick, cartCount = 0 }) {

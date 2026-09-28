@@ -186,8 +186,8 @@ export default function SmoothScrollSequence() {
   }, []);
 
   const prefetchWindow = useCallback((centerFrame) => {
-    const start = Math.max(1, centerFrame - 30);
-    const end = Math.min(SEQUENCE_CONFIG.totalFrames, centerFrame + 60);
+    const start = Math.max(1, centerFrame - 40);
+    const end = Math.min(SEQUENCE_CONFIG.totalFrames, centerFrame + 100);
     for (let i = start; i <= end; i++) {
       loadImage(i);
     }
@@ -291,7 +291,7 @@ export default function SmoothScrollSequence() {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 0.1,
+        scrub: 0.5,
         onUpdate: (self) => {
           if (progressBarRef.current) {
             progressBarRef.current.style.transform = `scaleX(${self.progress})`;

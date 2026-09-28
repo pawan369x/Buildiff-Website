@@ -7,6 +7,8 @@ import CartDrawer from './components/CartDrawer';
 import PaymentModal from './components/PaymentModal';
 import VIPProfileModal from './components/VIPProfileModal';
 import Products from './components/Products';
+import PolicyPage from './components/PolicyPage';
+import TransformationsPage from './components/TransformationsPage';
 import Footer from './components/Footer';
 
 function MainLayout() {
@@ -64,6 +66,16 @@ function MainLayout() {
               </button>
             </div>
           </section>
+        </main>
+      ) : activeTab === 'transformations' ? (
+        <main className="bg-neutral-950 pt-20 min-h-screen">
+          {/* Dedicated Customer Transformations & Wall of Fame View */}
+          <TransformationsPage />
+        </main>
+      ) : activeTab === 'policy' ? (
+        <main className="bg-neutral-950 pt-24 min-h-screen">
+          {/* Dedicated Creative Policy Page View */}
+          <PolicyPage />
         </main>
       ) : (
         <main className="bg-neutral-950 pt-24 min-h-screen">
